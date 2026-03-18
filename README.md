@@ -73,26 +73,46 @@ https://Ra868.github.io/software-programming-4kids-jupyterlite/
 
 ## 🖥️ Embedding in WordPress
 
-Once your GitHub Pages site is live, you can embed it in any WordPress page:
+Once your GitHub Pages site is live, you can embed it in any WordPress page.
+There are two ways to do this — a quick **Custom HTML block** approach and a
+reusable **shortcode plugin** approach.
 
-1. In the WordPress editor, add a **Custom HTML** block.
-2. Paste the following iframe code, replacing the `src` URL if you use a custom domain:
+### Quick embed (Custom HTML block)
+
+1. In the WordPress block editor, add a **Custom HTML** block.
+2. Paste the following code:
 
 ```html
-<div style="width:100%; height:900px; border:1px solid #ddd;">
+<!-- JupyterLite — Interactive Coding Lessons -->
+<div style="width:100%; height:900px; border:1px solid #ddd;
+            border-radius:4px; overflow:hidden; background:#f8f8f8;">
   <iframe
-    src="https://Ra868.github.io/software-programming-4kids-jupyterlite/"
+    src="https://Ra868.github.io/software-programming-4kids-jupyterlite/lab/index.html?path=index.ipynb"
     style="width:100%; height:100%; border:none;"
-    allow="same-origin"
-    sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+    title="Interactive JupyterLite Coding Lesson"
+    allow="clipboard-read; clipboard-write"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+    loading="lazy">
   </iframe>
 </div>
 ```
 
 3. Save / publish the WordPress page.
 
-Visitors will see the full interactive JupyterLite interface and can run all
-Python programs directly inside your WordPress page — no installation required.
+### Reusable shortcode plugin
+
+For embedding on multiple pages with a simple tag like
+`[jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb"]`,
+use the drop-in plugin in this repo's `wordpress/` folder.
+
+📖 **See the full guide: [wordpress/README.md](wordpress/README.md)**
+
+It covers:
+- Installing and activating the plugin
+- All shortcode attributes (`notebook`, `height`, `width`)
+- Direct links for each individual lesson
+- Troubleshooting common embedding problems
+- Notes for WordPress.com hosted sites
 
 ---
 
@@ -106,6 +126,9 @@ software-programming-4kids-jupyterlite/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml             ← Automated build & deploy workflow
+├── wordpress/
+│   ├── jupyterlite-embed.php      ← Drop-in WordPress shortcode plugin
+│   └── README.md                  ← Full WordPress embedding guide
 └── content/                       ← All Jupyter notebooks
     ├── index.ipynb                ← Welcome / table of contents
     └── numpy/
