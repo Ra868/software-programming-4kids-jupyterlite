@@ -26,6 +26,10 @@ Live site: **https://Ra868.github.io/software-programming-4kids-jupyterlite/**
 The deploy workflow, notebooks, and all config live on this PR branch.
 Merging it to `main` is required before anything else works.
 
+1. Open the PR: `https://github.com/Ra868/software-programming-4kids-jupyterlite/pull/1`
+2. If the PR is marked **Draft**, click **"Ready for review"** at the bottom of the page first.
+3. Click **"Merge pull request"** → **"Confirm merge"**.
+
 ### Step 2 — Switch GitHub Pages source to "GitHub Actions"
 
 > ⚠️ This is a **one-time** click.  GitHub's default is "Deploy from a branch"
