@@ -69,7 +69,7 @@ function jupyterlite_embed_shortcode( $atts ) {
         $src = $base_url . 'lab/index.html?path=index.ipynb';
     }
 
-    // Sanitise attribute values before inserting into HTML.
+    // Sanitize attribute values before inserting into HTML.
     $src    = esc_url( $src );
     $width  = esc_attr( $atts['width'] );
     $height = absint( $atts['height'] );

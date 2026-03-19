@@ -19,46 +19,59 @@ Live site: **https://Ra868.github.io/software-programming-4kids-jupyterlite/**
 
 ---
 
-## 🚀 One-Time GitHub Pages Setup (required after merging the PR)
+## 🚀 Getting the Live Site Up (do these steps in order)
 
-GitHub Pages must be told to use the **GitHub Actions** deployment source instead of a branch.
-This is a one-time click in the repository settings.
+### Step 1 — Merge the PR into `main`
 
-### Step-by-step
+The deploy workflow, notebooks, and all config live on this PR branch.
+Merging it to `main` is required before anything else works.
 
-1. Open your repository on GitHub:
+### Step 2 — Switch GitHub Pages source to "GitHub Actions"
+
+> ⚠️ This is a **one-time** click.  GitHub's default is "Deploy from a branch"
+> which serves raw source files, not the built JupyterLite app.
+
+1. Go to **Settings → Pages** in your repository:
    ```
-   https://github.com/Ra868/software-programming-4kids-jupyterlite
+   https://github.com/Ra868/software-programming-4kids-jupyterlite/settings/pages
    ```
+2. Under **Build and deployment → Source**, choose **GitHub Actions**.
+3. Click **Save** (if the button appears).
 
-2. Click the **Settings** tab (the gear icon, top-right area of the repo page).
+### Step 3 — Trigger the first deployment
 
-3. In the left sidebar, click **Pages**
-   (under *Code and automation*).
+Merging the PR already triggers the workflow automatically.  If it didn't run
+(e.g. you changed the Pages source *after* merging), start it manually:
 
-4. Under **Build and deployment → Source**, open the dropdown and choose
-   **GitHub Actions**.
-   > ⚠️ The default value is "Deploy from a branch" — change it to "GitHub Actions".
-
-5. Click **Save** (if a Save button appears).
-
-That's the entire manual step. GitHub will now run the
-`.github/workflows/deploy.yml` workflow whenever you push to `main`, build
-JupyterLite, and publish the result to GitHub Pages automatically.
-
-### Trigger the first deployment
-
-After saving the setting, push any small change (e.g., add a blank line to this
-README) or use the **Run workflow** button:
-
-1. Click the **Actions** tab in your repository.
+1. Click the **Actions** tab:
+   ```
+   https://github.com/Ra868/software-programming-4kids-jupyterlite/actions
+   ```
 2. Click **Deploy JupyterLite to GitHub Pages** in the left list.
 3. Click **Run workflow → Run workflow**.
 
-Wait about 2–3 minutes, then visit your live site:
+### Step 4 — Visit the live site
+
+Wait about 2–3 minutes for the build to finish, then open:
 ```
 https://Ra868.github.io/software-programming-4kids-jupyterlite/
 ```
+
+You will be redirected automatically to the interactive JupyterLite interface
+where students can write and run Python programs directly in the browser.
+
+> **Browser requirements:** JupyterLite uses WebAssembly and Service Workers.
+> It works in all modern browsers (Chrome 89+, Firefox 90+, Edge 89+, Safari 15+).
+> Internet Explorer is not supported.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| Workflow never appeared in Actions | Check **Settings → Pages → Source** is set to **GitHub Actions**, not "Deploy from a branch" |
+| Build fails with `jupyter: command not found` | The pip install step failed — re-run the workflow; it usually succeeds on retry |
+| Site shows a 404 | The first deployment hasn't finished yet — wait 2–3 minutes and refresh |
+| Site shows raw file listings | Pages source is still set to "Deploy from a branch" — see Step 2 |
 
 ---
 
