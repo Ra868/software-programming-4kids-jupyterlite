@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-# Only one deployment runs at a time; a new push cancels the in-progress one.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -15,9 +14,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-deploy:
@@ -29,11 +25,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: List files before cleanup
+        run: ls -la
+
       - name: Cleanup unwanted files
         run: |
+          echo "Current directory: $(pwd)"
+          echo "Listing all .txt files:"
+          find . -name "*.txt" -type f
+          echo "Listing all .rtf files:"
+          find . -name "*.rtf" -type f
           echo "Removing .txt and .rtf files..."
-          find . -type f \( -name '*.txt' -o -name '*.rtf' \) ! -path './.git/*' -delete
-          echo "Cleanup complete"
+          find . -type f -name "*.txt" -delete
+          find . -type f -name "*.rtf" -delete
+          echo "Cleanup complete. Verifying:"
+          find . -name "*.txt" -type f || echo "No .txt files found"
+          find . -name "*.rtf" -type f || echo "No .rtf files found"
 
       - name: Set up Python
         uses: actions/setup-python@v5
