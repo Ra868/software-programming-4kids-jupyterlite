@@ -16,6 +16,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -25,6 +28,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cleanup unwanted files
+        run: |
+          echo "Removing .txt and .rtf files..."
+          find . -type f \( -name '*.txt' -o -name '*.rtf' \) ! -path './.git/*' -delete
+          echo "Cleanup complete"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -41,7 +50,7 @@ jobs:
         run: jupyter lite build --config jupyter_lite_config.json --output-dir _output
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: '_output'
 
