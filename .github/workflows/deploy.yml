@@ -32,15 +32,19 @@ jobs:
           find . -type f -name "*.rtf" -delete
           echo "Cleanup complete"
 
-      - name: Copy content to root for JupyterLite build
+      - name: Prepare content for JupyterLite build
         run: |
-          echo "Copying notebooks from content/ to root..."
+          echo "Preparing notebooks from content/ directory..."
           if [ -d "content" ]; then
-            cp -v content/*.ipynb . || true
-            mkdir -p notebooks
-            cp -rv content/* notebooks/ || true
+            echo "Content directory exists, copying structure..."
+            # Copy entire content directory to notebooks
+            cp -r content notebooks
+            echo "Content copied successfully"
+            echo "Directory structure:"
+            find notebooks -type f -name "*.ipynb" | head -20
+          else
+            echo "Warning: content directory not found"
           fi
-          ls -la *.ipynb 2>/dev/null || echo "No notebooks in root"
 
       - name: Set up Python
         uses: actions/setup-python@v5
