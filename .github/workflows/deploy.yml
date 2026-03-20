@@ -25,22 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: List files before cleanup
-        run: ls -la
-
       - name: Cleanup unwanted files
         run: |
-          echo "Current directory: $(pwd)"
-          echo "Listing all .txt files:"
-          find . -name "*.txt" -type f
-          echo "Listing all .rtf files:"
-          find . -name "*.rtf" -type f
           echo "Removing .txt and .rtf files..."
           find . -type f -name "*.txt" -delete
           find . -type f -name "*.rtf" -delete
-          echo "Cleanup complete. Verifying:"
-          find . -name "*.txt" -type f || echo "No .txt files found"
-          find . -name "*.rtf" -type f || echo "No .rtf files found"
+          echo "Cleanup complete"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -50,7 +40,7 @@ jobs:
       - name: Install JupyterLite and dependencies
         run: |
           pip install --upgrade pip
-          pip install jupyterlite-core jupyterlite-pyodide-kernel
+          pip install jupyterlite-core jupyterlite-pyodide-kernel jupyter-server
 
       - name: Build JupyterLite
         run: jupyter lite build --config jupyter_lite_config.json --output-dir _output
