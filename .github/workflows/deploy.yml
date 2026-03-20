@@ -42,6 +42,15 @@ jobs:
           pip install --upgrade pip
           pip install jupyterlite-core jupyterlite-pyodide-kernel jupyter-server
 
+      - name: Prepare notebooks directory
+        run: |
+          echo "Creating notebooks directory..."
+          mkdir -p notebooks
+          if [ -d "content" ]; then
+            cp -r content/. notebooks/
+            echo "Notebooks copied successfully"
+          fi
+
       - name: Build JupyterLite
         run: jupyter lite build --config jupyter_lite_config.json --output-dir _output
 
