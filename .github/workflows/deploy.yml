@@ -32,20 +32,6 @@ jobs:
           find . -type f -name "*.rtf" -delete
           echo "Cleanup complete"
 
-      - name: Prepare content for JupyterLite build
-        run: |
-          echo "Preparing notebooks from content/ directory..."
-          if [ -d "content" ]; then
-            echo "Content directory exists, copying structure..."
-            # Copy entire content directory to notebooks
-            cp -r content notebooks
-            echo "Content copied successfully"
-            echo "Directory structure:"
-            find notebooks -type f -name "*.ipynb" | head -20
-          else
-            echo "Warning: content directory not found"
-          fi
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -58,6 +44,15 @@ jobs:
 
       - name: Build JupyterLite
         run: jupyter lite build --config jupyter_lite_config.json --output-dir _output
+
+      - name: Copy content to output
+        run: |
+          echo "Copying content folder to output..."
+          if [ -d "content" ]; then
+            cp -r content _output/files/
+            echo "Content copied successfully"
+            ls -la _output/files/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
