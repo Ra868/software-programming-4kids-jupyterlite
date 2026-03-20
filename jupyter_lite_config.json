@@ -1,7 +1,4 @@
 {
-  "LiteBuildConfig": {
-    "contents": ["notebooks"]
-  },
   "jupyter-config-data": {
     "defaultUrl": "/lab/index.html?path=index.ipynb"
   }
