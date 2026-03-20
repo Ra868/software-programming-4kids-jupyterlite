@@ -1,5 +1,8 @@
 {
   "jupyter-config-data": {
     "defaultUrl": "/lab/index.html?path=index.ipynb"
+  },
+  "contents": {
+    "path": "content"
   }
 }
