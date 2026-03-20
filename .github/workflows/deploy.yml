@@ -32,6 +32,16 @@ jobs:
           find . -type f -name "*.rtf" -delete
           echo "Cleanup complete"
 
+      - name: Copy content to root for JupyterLite build
+        run: |
+          echo "Copying notebooks from content/ to root..."
+          if [ -d "content" ]; then
+            cp -v content/*.ipynb . || true
+            mkdir -p notebooks
+            cp -rv content/* notebooks/ || true
+          fi
+          ls -la *.ipynb 2>/dev/null || echo "No notebooks in root"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
