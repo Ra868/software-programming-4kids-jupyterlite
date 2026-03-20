@@ -50,7 +50,7 @@ jobs:
       - name: Install JupyterLite and dependencies
         run: |
           pip install --upgrade pip
-          pip install jupyterlite-core jupyterlite-pyodide-kernel
+          pip install jupyterlite-core jupyterlite-pyodide-kernel jupyter-server
 
       - name: Build JupyterLite
         run: jupyter lite build --config jupyter_lite_config.json --output-dir _output
