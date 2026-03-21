@@ -26,4 +26,8 @@ pip-log.txt
 
 # OS
 .DS_Store
+<<<<<<< HEAD
 Thumbs.db
+=======
+Thumbs.db
+>>>>>>> a4dc6faa3ecdae6dc11b5c827b535a5eac47f9fc
