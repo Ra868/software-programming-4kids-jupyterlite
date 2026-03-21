@@ -52,7 +52,7 @@ jobs:
           fi
 
       - name: Build JupyterLite
-       run: jupyter lite build --config jupyter_lite_config.json --contents content/ --output-dir _output
+        run: jupyter lite build --config jupyter_lite_config.json --contents content/ --output-dir _output
 
       - name: Copy content to output
         run: |
