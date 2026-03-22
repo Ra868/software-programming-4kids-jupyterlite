@@ -1,3 +1,4 @@
+PS C:\Users\Ravi\documents\GitHub\software-programming-4kids-jupyterlite> cat jupyter_lite_config.json
 {
 <<<<<<< HEAD
   "litePlugins": [
@@ -17,7 +18,7 @@
     }
   },
   "notebookStartDir": "/",
-  "favicon": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>"
+  "favicon": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ðŸ“š</text></svg>"
 }
 =======
   "jupyter-config-data": {
@@ -27,4 +28,4 @@
     "path": "content"
   }
 }
->>>>>>> a4dc6faa3ecdae6dc11b5c827b535a5eac47f9fc
+>>>>>>> a4dc6faa3ecdae6dc11b5c827b535a5eac47f9fcfc
