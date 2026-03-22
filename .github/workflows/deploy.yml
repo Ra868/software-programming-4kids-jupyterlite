@@ -33,10 +33,10 @@ jobs:
       - name: Install JupyterLite and dependencies
         run: |
           pip install --upgrade pip
-          pip install jupyterlite-core jupyterlite-pyodide-kernel jupyter-server
+          pip install jupyterlite-core jupyterlite-pyodide-kernel
 
       - name: Build JupyterLite
-        run: jupyter lite build --contents content/ --output-dir _output
+        run: jupyter lite build --contents content --output-dir _output
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
