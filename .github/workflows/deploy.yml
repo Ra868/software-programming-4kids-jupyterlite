@@ -35,7 +35,12 @@ jobs:
 
       - name: Build
         run: |
-          jupyter lite build --contents content --output-dir dist
+          jupyter lite build --output-dir dist
+
+      - name: Copy notebooks to dist
+        run: |
+          mkdir -p dist/files
+          cp content/*.ipynb dist/files/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
