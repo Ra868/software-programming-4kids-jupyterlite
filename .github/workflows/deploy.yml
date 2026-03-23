@@ -34,13 +34,12 @@ jobs:
           python -m pip install jupyterlite
 
       - name: Build JupyterLite
-        run: |
-          jupyter lite build --output-dir dist
+        run: jupyter lite build --output-dir dist
 
       - name: Copy content files
         run: |
           mkdir -p dist/files
-          cp -r content/*.ipynb dist/files/ 2>/dev/null || true
+          find content -name "*.ipynb" -exec cp {} dist/files/ \;
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
