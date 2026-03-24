@@ -52,11 +52,11 @@ Replace the `src` URL to link directly to a specific notebook:
 | Lesson | `src` URL |
 |--------|-----------|
 | Welcome / Index | `.../lab/index.html?path=index.ipynb` |
-| Projectile Motion | `.../lab/index.html?path=numpy%2Fphysics%2Fprojectile_motion.ipynb` |
-| Atmospheric Pressure | `.../lab/index.html?path=numpy%2Fphysics%2Fatmospheric_pressure.ipynb` |
-| pH & H⁺ Concentration | `.../lab/index.html?path=numpy%2Fchemistry%2FpH_concentration.ipynb` |
-| Radioactive Decay | `.../lab/index.html?path=numpy%2Fchemistry%2Fhalf_life.ipynb` |
-| Compound Interest | `.../lab/index.html?path=numpy%2Fmath%2Fcompound_interest.ipynb` |
+| Projectile Motion | `.../lab/index.html?path=projectile_motion.ipynb` |
+| Atmospheric Pressure | `.../lab/index.html?path=atmospheric_pressure.ipynb` |
+| pH & H⁺ Concentration | `.../lab/index.html?path=pH_concentration.ipynb` |
+| Radioactive Decay | `.../lab/index.html?path=half_life.ipynb` |
+| Compound Interest | `.../lab/index.html?path=compound_interest.ipynb` |
 
 *(The base URL `...` is `https://Ra868.github.io/software-programming-4kids-jupyterlite`)*
 
@@ -103,11 +103,11 @@ This embeds the full JupyterLite interface (welcome page) at the default
 #### Open a specific notebook
 
 ```
-[jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb"]
-[jupyterlite_embed notebook="numpy/chemistry/half_life.ipynb"]
-[jupyterlite_embed notebook="numpy/chemistry/pH_concentration.ipynb"]
-[jupyterlite_embed notebook="numpy/physics/atmospheric_pressure.ipynb"]
-[jupyterlite_embed notebook="numpy/math/compound_interest.ipynb"]
+[jupyterlite_embed notebook="projectile_motion.ipynb"]
+[jupyterlite_embed notebook="half_life.ipynb"]
+[jupyterlite_embed notebook="pH_concentration.ipynb"]
+[jupyterlite_embed notebook="atmospheric_pressure.ipynb"]
+[jupyterlite_embed notebook="compound_interest.ipynb"]
 ```
 
 #### Adjust height and width
@@ -115,12 +115,12 @@ This embeds the full JupyterLite interface (welcome page) at the default
 ```
 [jupyterlite_embed height="700"]
 [jupyterlite_embed height="1100" width="90%"]
-[jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb" height="800"]
+[jupyterlite_embed notebook="projectile_motion.ipynb" height="800"]
 ```
 
 | Attribute  | Default  | Description |
 |------------|----------|-------------|
-| `notebook` | *(index)* | Path to a `.ipynb` file relative to the `content/` folder |
+| `notebook` | *(index)* | Filename of a `.ipynb` file in the flat `content/` folder |
 | `height`   | `900`    | Iframe height in pixels |
 | `width`    | `100%`   | Container width (any CSS value) |
 
