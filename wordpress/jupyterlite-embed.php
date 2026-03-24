@@ -22,16 +22,17 @@
  * Basic (loads the welcome/index notebook):
  *   [jupyterlite_embed]
  *
- * Open a specific notebook by its path inside the content/ folder:
- *   [jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb"]
- *   [jupyterlite_embed notebook="numpy/chemistry/half_life.ipynb"]
- *   [jupyterlite_embed notebook="numpy/chemistry/pH_concentration.ipynb"]
- *   [jupyterlite_embed notebook="numpy/physics/atmospheric_pressure.ipynb"]
- *   [jupyterlite_embed notebook="numpy/math/compound_interest.ipynb"]
+ * Open a specific notebook by its filename (files live flat in content/):
+ *   [jupyterlite_embed notebook="projectile_motion.ipynb"]
+ *   [jupyterlite_embed notebook="half_life.ipynb"]
+ *   [jupyterlite_embed notebook="pH_concentration.ipynb"]
+ *   [jupyterlite_embed notebook="atmospheric_pressure.ipynb"]
+ *   [jupyterlite_embed notebook="compound_interest.ipynb"]
  *
  * Adjust the height (pixels) or width (CSS value):
  *   [jupyterlite_embed height="700"]
  *   [jupyterlite_embed height="1100" width="90%"]
+ *   [jupyterlite_embed notebook="projectile_motion.ipynb" height="800"]
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -42,7 +43,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Render the [jupyterlite_embed] shortcode.
  *
  * Shortcode attributes:
- *   notebook  (string)  Path to a .ipynb file relative to the content/ folder.
+ *   notebook  (string)  Filename of the .ipynb file (e.g. "projectile_motion.ipynb").
+ *                       All notebooks live flat in the content/ folder.
  *                       Defaults to index.ipynb (the welcome page).
  *   height    (int)     Iframe height in pixels.  Default: 900.
  *   width     (string)  Iframe container width (any CSS value). Default: 100%.
@@ -63,8 +65,11 @@ function jupyterlite_embed_shortcode( $atts ) {
 
     $base_url = 'https://Ra868.github.io/software-programming-4kids-jupyterlite/';
 
+    // Accept a flat filename only — strip any directory components so that
+    // shortcodes like notebook="projectile_motion.ipynb" work correctly and
+    // path-traversal attempts (e.g. "../../etc/passwd") are harmless.
     if ( ! empty( $atts['notebook'] ) ) {
-        $src = $base_url . 'lab/index.html?path=' . rawurlencode( $atts['notebook'] );
+        $src = $base_url . 'lab/index.html?path=' . rawurlencode( basename( $atts['notebook'] ) );
     } else {
         $src = $base_url . 'lab/index.html?path=index.ipynb';
     }
