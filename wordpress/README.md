@@ -1,78 +1,19 @@
 # WordPress Embedding Guide
 
-This guide explains two ways to embed the interactive JupyterLite lessons
-into a WordPress page or post.
+This guide explains how to embed the interactive JupyterLite lessons
+into a WordPress page or post using the shortcode plugin.
 
 **Prerequisites:** The GitHub Pages site must already be live at
 `https://Ra868.github.io/software-programming-4kids-jupyterlite/`
 before you embed it.  See the [main README](../README.md) for the one-time
 GitHub Pages setup step.
 
----
-
-## Method 1 — Custom HTML Block (no plugin, quickest)
-
-Use this method to embed the lessons on a single page or post without
-installing anything extra.
-
-### Step-by-step
-
-1. Open the WordPress page or post you want to embed the lessons in
-   (or create a new one).
-
-2. In the block editor, click the **"+"** button to add a new block,
-   search for **Custom HTML**, and insert it.
-
-3. Paste the following code into the Custom HTML block:
-
-```html
-<!-- JupyterLite — Interactive Coding Lessons -->
-<div style="width:100%; height:900px; border:1px solid #ddd;
-            border-radius:4px; overflow:hidden; background:#f8f8f8;">
-  <iframe
-    src="https://Ra868.github.io/software-programming-4kids-jupyterlite/lab/index.html?path=index.ipynb"
-    style="width:100%; height:100%; border:none;"
-    title="Interactive JupyterLite Coding Lesson"
-    allow="clipboard-read; clipboard-write"
-    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
-    loading="lazy">
-  </iframe>
-</div>
-```
-
-4. Click **Save draft** or **Publish**.
-
-5. Preview the page — the full JupyterLite interface loads inside the iframe.
-   Students can write and run Python programs without leaving your site.
-
-### Open a specific lesson directly
-
-Replace the `src` URL to link directly to a specific notebook:
-
-| Lesson | `src` URL |
-|--------|-----------|
-| Welcome / Index | `.../lab/index.html?path=index.ipynb` |
-| Projectile Motion | `.../lab/index.html?path=numpy%2Fphysics%2Fprojectile_motion.ipynb` |
-| Atmospheric Pressure | `.../lab/index.html?path=numpy%2Fphysics%2Fatmospheric_pressure.ipynb` |
-| pH & H⁺ Concentration | `.../lab/index.html?path=numpy%2Fchemistry%2FpH_concentration.ipynb` |
-| Radioactive Decay | `.../lab/index.html?path=numpy%2Fchemistry%2Fhalf_life.ipynb` |
-| Compound Interest | `.../lab/index.html?path=numpy%2Fmath%2Fcompound_interest.ipynb` |
-
-*(The base URL `...` is `https://Ra868.github.io/software-programming-4kids-jupyterlite`)*
-
-### Adjust the height
-
-Change `height:900px` in the wrapper `<div>` to any value that fits
-your page layout (e.g. `700px`, `1100px`).
+**Notebook structure:** All notebooks live in a flat `content/` folder —
+no subfolders. Reference them by filename only (e.g., `projectile_motion.ipynb`).
 
 ---
 
-## Method 2 — Shortcode Plugin (reusable across all pages)
-
-Use this method when you want to embed lessons on multiple pages or posts
-with a simple shortcode like `[jupyterlite_embed]`.
-
-### Installation
+## Installation
 
 1. On your computer, locate the plugin file:
    ```
@@ -89,40 +30,65 @@ with a simple shortcode like `[jupyterlite_embed]`.
    `wp-content/plugins/jupyterlite-embed/jupyterlite-embed.php` via FTP or
    your host's File Manager, then activate it from **Plugins → Installed Plugins**.
 
-### Shortcode usage
+---
 
-Once the plugin is active, use the shortcode in any page, post, or widget:
+## Shortcode Usage
+
+Once the plugin is active, use the shortcode in any page, post, or widget.
+
+### Basic (loads the welcome/index notebook)
 
 ```
 [jupyterlite_embed]
 ```
 
-This embeds the full JupyterLite interface (welcome page) at the default
-900 px height.
+### Open a specific notebook
 
-#### Open a specific notebook
+Reference notebooks by filename only:
 
 ```
-[jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb"]
-[jupyterlite_embed notebook="numpy/chemistry/half_life.ipynb"]
-[jupyterlite_embed notebook="numpy/chemistry/pH_concentration.ipynb"]
-[jupyterlite_embed notebook="numpy/physics/atmospheric_pressure.ipynb"]
-[jupyterlite_embed notebook="numpy/math/compound_interest.ipynb"]
+[jupyterlite_embed notebook="projectile_motion.ipynb"]
+[jupyterlite_embed notebook="projectile_motion.ipynb" title="Projectile Motion"]
+[jupyterlite_embed notebook="pH_concentration.ipynb" title="pH & H⁺ Concentration" height="800"]
+[jupyterlite_embed notebook="half_life.ipynb" title="Radioactive Decay"]
+[jupyterlite_embed notebook="atmospheric_pressure.ipynb" title="Atmospheric Pressure"]
+[jupyterlite_embed notebook="compound_interest.ipynb" title="Compound Interest"]
 ```
 
-#### Adjust height and width
+### Adjust height and width
 
 ```
 [jupyterlite_embed height="700"]
 [jupyterlite_embed height="1100" width="90%"]
-[jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb" height="800"]
 ```
 
-| Attribute  | Default  | Description |
-|------------|----------|-------------|
-| `notebook` | *(index)* | Path to a `.ipynb` file relative to the `content/` folder |
-| `height`   | `900`    | Iframe height in pixels |
-| `width`    | `100%`   | Container width (any CSS value) |
+### Shortcode attributes
+
+| Attribute  | Default   | Description |
+|------------|-----------|-------------|
+| `notebook` | *(index)* | Filename of a `.ipynb` file in the flat `content/` folder |
+| `title`    | *(none)*  | Optional display title for documentation purposes |
+| `height`   | `900`     | Iframe height in pixels |
+| `width`    | `100%`    | Container width (any CSS value) |
+
+---
+
+## Notebook structure
+
+All notebooks are stored flat in the `content/` folder:
+
+```
+content/
+├── index.ipynb
+├── projectile_motion.ipynb
+├── pH_concentration.ipynb
+├── half_life.ipynb
+├── atmospheric_pressure.ipynb
+└── compound_interest.ipynb
+```
+
+To add a new notebook, place the `.ipynb` file directly in `content/` and
+reference it in the shortcode by filename.
 
 ---
 
@@ -130,10 +96,11 @@ This embeds the full JupyterLite interface (welcome page) at the default
 
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|
-| Blank iframe / "refused to connect" | GitHub Pages site not yet deployed | Complete the [GitHub Pages setup](../README.md#-one-time-github-pages-setup-required-after-merging-the-pr) first |
+| Blank iframe / "refused to connect" | GitHub Pages site not yet deployed | Complete the [GitHub Pages setup](../README.md) first |
+| Notebook not found / file browser shown instead | Filename typo in shortcode | Double-check the filename matches exactly (case-sensitive) |
 | Iframe shows but Python doesn't run | Browser blocks cross-origin service workers in some configurations | Advise students to open `https://Ra868.github.io/software-programming-4kids-jupyterlite/` directly in a new tab |
-| WordPress strips the `<iframe>` tag | Some security plugins remove iframes | Use the shortcode method (Method 2) which bypasses this restriction |
-| Iframe is too short / scrolls inside | Default height doesn't match your content | Add `height="1100"` (or larger) to the shortcode, or change `height:900px` in the Custom HTML |
+| WordPress strips the `<iframe>` tag | Some security plugins remove iframes | Use the shortcode method which bypasses this restriction |
+| Iframe is too short / scrolls inside | Default height doesn't match your content | Add `height="1100"` (or larger) to the shortcode |
 
 ---
 
