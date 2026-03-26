@@ -63,7 +63,7 @@ function jupyterlite_embed_shortcode( $atts ) {
         'jupyterlite_embed'
     );
 
-    $base_url = 'https://Ra868.github.io/software-programming-4kids-jupyterlite/';
+    $base_url = plugin_dir_url( __FILE__ ) . 'jupyterlite-dist/';
 
     // Sanitize notebook to a plain filename (no directory traversal).
     $notebook = sanitize_file_name( $atts['notebook'] );
