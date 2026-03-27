@@ -4,7 +4,7 @@
  * Plugin URI:   https://github.com/Ra868/software-programming-4kids-jupyterlite
  * Description:  Adds a [jupyterlite_embed] shortcode to embed the interactive
  *               JupyterLite coding lessons anywhere on your WordPress site.
- * Version:      1.0.0
+ * Version:      1.1.0
  * Author:       Ra868
  * License:      MIT
  *
@@ -22,12 +22,10 @@
  * Basic (loads the welcome/index notebook):
  *   [jupyterlite_embed]
  *
- * Open a specific notebook by its path inside the content/ folder:
- *   [jupyterlite_embed notebook="numpy/physics/projectile_motion.ipynb"]
- *   [jupyterlite_embed notebook="numpy/chemistry/half_life.ipynb"]
- *   [jupyterlite_embed notebook="numpy/chemistry/pH_concentration.ipynb"]
- *   [jupyterlite_embed notebook="numpy/physics/atmospheric_pressure.ipynb"]
- *   [jupyterlite_embed notebook="numpy/math/compound_interest.ipynb"]
+ * Open a specific notebook by filename (flat content/ folder):
+ *   [jupyterlite_embed notebook="projectile_motion.ipynb"]
+ *   [jupyterlite_embed notebook="projectile_motion.ipynb" title="Projectile Motion"]
+ *   [jupyterlite_embed notebook="pH_concentration.ipynb" title="pH & H⁺ Concentration" height="800"]
  *
  * Adjust the height (pixels) or width (CSS value):
  *   [jupyterlite_embed height="700"]
@@ -42,8 +40,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Render the [jupyterlite_embed] shortcode.
  *
  * Shortcode attributes:
- *   notebook  (string)  Path to a .ipynb file relative to the content/ folder.
+ *   notebook  (string)  Filename of a .ipynb file in the flat content/ folder.
  *                       Defaults to index.ipynb (the welcome page).
+ *   title     (string)  Optional label for the notebook. Accepted but not rendered —
+ *                       the iframe is embedded silently. Useful for self-documenting
+ *                       shortcodes in the WordPress editor.
  *   height    (int)     Iframe height in pixels.  Default: 900.
  *   width     (string)  Iframe container width (any CSS value). Default: 100%.
  *
@@ -54,6 +55,7 @@ function jupyterlite_embed_shortcode( $atts ) {
     $atts = shortcode_atts(
         array(
             'notebook' => '',
+            'title'    => '',
             'height'   => '900',
             'width'    => '100%',
         ),
@@ -61,10 +63,14 @@ function jupyterlite_embed_shortcode( $atts ) {
         'jupyterlite_embed'
     );
 
-    $base_url = 'https://Ra868.github.io/software-programming-4kids-jupyterlite/';
+    $base_url = 'https://ra868.github.io/software-programming-4kids-jupyterlite/';
 
-    if ( ! empty( $atts['notebook'] ) ) {
-        $src = $base_url . 'lab/index.html?path=' . rawurlencode( $atts['notebook'] );
+    // Sanitize notebook to a plain filename (no directory traversal).
+    $notebook = sanitize_file_name( $atts['notebook'] );
+
+    // Only allow .ipynb files to prevent referencing unintended file types.
+    if ( ! empty( $notebook ) && substr( $notebook, -6 ) === '.ipynb' ) {
+        $src = $base_url . 'lab/index.html?path=' . rawurlencode( $notebook );
     } else {
         $src = $base_url . 'lab/index.html?path=index.ipynb';
     }
