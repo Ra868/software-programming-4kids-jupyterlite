@@ -1,27 +1,29 @@
-import os
+﻿import os
 import json
+import codecs
 
-# Path to the content folder containing .ipynb files
 content_folder = 'content/'
 
-# Function to fix execution_count and outputs metadata
-
 def fix_notebook_metadata(filename):
-    with open(filename, 'r') as file:
-        notebook = json.load(file)
+    try:
+        with codecs.open(filename, 'r', encoding='utf-8-sig') as file:
+            notebook = json.load(file)
 
-    # Iterate over each cell in the notebook
-    for cell in notebook.get('cells', []):
-        if cell['cell_type'] == 'code':
-            # Fix execution_count and outputs
-            cell['execution_count'] = None
-            cell['outputs'] = []
+        for cell in notebook.get('cells', []):
+            if cell['cell_type'] == 'code':
+                cell['execution_count'] = None
+                cell['outputs'] = []
 
-    # Write the updated notebook back to file
-    with open(filename, 'w') as file:
-        json.dump(notebook, file, indent=2)
+        with codecs.open(filename, 'w', encoding='utf-8') as file:
+            json.dump(notebook, file, indent=2)
+        
+        print(f"Fixed: {filename}")
+    except Exception as e:
+        print(f"Error with {filename}: {e}")
 
-# Iterate over all .ipynb files in the content folder
+print("Starting notebook metadata fix...")
 for filename in os.listdir(content_folder):
     if filename.endswith('.ipynb'):
         fix_notebook_metadata(os.path.join(content_folder, filename))
+
+print("All notebooks processed!")
