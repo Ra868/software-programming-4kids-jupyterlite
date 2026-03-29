@@ -9,5 +9,11 @@
     "notebook": {
       "defaultKernelName": "pyodide"
     }
+  },
+  "@jupyterlab/toc:plugin": {
+    "showToc": false
+  },
+  "@jupyterlab/apputils-extension:themes": {
+    "theme": "JupyterLab Light"
   }
 }
