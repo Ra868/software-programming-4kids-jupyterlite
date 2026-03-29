@@ -1,4 +1,4 @@
-﻿{
+{
   "jupyter-lite-schema-version": 0,
   "litePluginSettings": {
     "@jupyterlite/pyodide-kernel-extension:kernel": {
@@ -11,7 +11,8 @@
     }
   },
   "@jupyterlab/toc:plugin": {
-    "showToc": false
+    "showToc": false,
+    "showToolbarButton": false
   },
   "@jupyterlab/apputils-extension:themes": {
     "theme": "JupyterLab Light"
