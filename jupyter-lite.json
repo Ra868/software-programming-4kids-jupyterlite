@@ -11,7 +11,7 @@
     }
   },
   "@jupyterlab/toc:plugin": {
-    "showToc": false,
+    "showToc": true,
     "showToolbarButton": false
   },
   "@jupyterlab/apputils-extension:themes": {
